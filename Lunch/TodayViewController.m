@@ -16,7 +16,7 @@ static NSString * const kAppGroup = @"group.dk.unwire.MenU";
 static NSString * const kStorageKeyMenu = @"menu";
 
 @interface TodayViewController () <NCWidgetProviding>
-@property (weak) IBOutlet NSTextField *todatTextField;
+@property (weak) IBOutlet NSTextField *todayTextField;
 @property (nonatomic, strong) NSArray *completeMenu;
 @property (nonatomic, strong) ISO8601DateFormatter *inputDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *outputDateFormatter;
@@ -100,7 +100,7 @@ static NSString * const kStorageKeyMenu = @"menu";
 
 - (void)updateUi {
     NSDictionary *todaysItem = [self findTodaysItem];
-    [self.todatTextField setAttributedStringValue:[self formatMenuItem:todaysItem]];
+    [self.todayTextField setAttributedStringValue:[self formatMenuItem:todaysItem]];
 }
 
 - (NSDictionary *)findTodaysItem {

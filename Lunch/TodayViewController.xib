@@ -6,7 +6,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TodayViewController">
             <connections>
-                <outlet property="todatTextField" destination="KU6-MB-4x2" id="8lh-of-l5J"/>
+                <outlet property="todayTextField" destination="KU6-MB-4x2" id="sqg-2Z-ITT"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
