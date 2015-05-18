@@ -11,13 +11,16 @@
 
 static const NSTimeInterval kUpdateInterval = 60. * 60. * 8.;
 static NSString * const kUrl = @"http://unwire-menu.herokuapp.com/menus";
+static NSString * const kAppGroup = @"group.dk.unwire.MenU";
+static NSString * const kStorageKeyMenu = @"menu";
 static const CGFloat kRowHeight = 240;
 
 @interface TableController()
 @property (nonatomic, strong) NSTimer *updateTimer;
-@property (nonatomic, strong) NSArray *menu;
+@property (nonatomic, strong) NSArray *completeMenu;
 @property (nonatomic, strong) ISO8601DateFormatter *inputDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *outputDateFormatter;
+@property (nonatomic, strong) NSUserDefaults *sharedDefaults;
 @end
 
 @implementation TableController
@@ -25,13 +28,16 @@ static const CGFloat kRowHeight = 240;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.menu = [NSMutableArray array];
         self.updateTimer = [NSTimer timerWithTimeInterval:kUpdateInterval target:self selector:@selector(update) userInfo:nil repeats:YES];
         self.inputDateFormatter = [[ISO8601DateFormatter alloc] init];
         self.inputDateFormatter.parsesStrictly = NO;
         self.outputDateFormatter = [[NSDateFormatter alloc] init];
         [self.outputDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.outputDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        self.sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAppGroup];
+        if (!self.sharedDefaults) {
+            NSLog(@"TableController:init: Could not create shared defaults");
+        }
         [self update];
     }
     return self;
@@ -61,7 +67,7 @@ static const CGFloat kRowHeight = 240;
             return;
         }
         NSLog(@"TableController:update: Got menu: %@", newMenu);
-        self.menu = newMenu;
+        self.completeMenu = newMenu;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self reloadTable];
         });
@@ -72,10 +78,29 @@ static const CGFloat kRowHeight = 240;
     [self.tableView reloadData];
 }
 
+#pragma mark - Menu Property
+
+- (void)setCompleteMenu:(NSArray *)menu {
+    NSLog(@"TableController:setCompleteMenu");
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:menu];
+    [self.sharedDefaults setObject:data forKey:kStorageKeyMenu];
+    [self.sharedDefaults synchronize];
+}
+
+- (NSArray *)completeMenu {
+    NSData *data = [self.sharedDefaults objectForKey:kStorageKeyMenu];
+    if (data) {
+        return (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    } else {
+        NSLog(@"TableController:completeMenu: No menu");
+        return nil;
+    }
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.menu.count;
+    return self.completeMenu.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -87,7 +112,7 @@ static const CGFloat kRowHeight = 240;
          result.backgroundColor = [NSColor clearColor];
          result.editable = NO;
       }
-      result.stringValue = [self formatMenuItem:row];
+      result.attributedStringValue = [self formatMenuItem:row];
       return result;
 }
 
@@ -95,24 +120,33 @@ static const CGFloat kRowHeight = 240;
     return kRowHeight;
 }
 
-- (NSString *)formatMenuItem:(NSInteger)row {
-    if (row < 0 || row >= self.menu.count) {
+- (NSAttributedString *)formatMenuItem:(NSInteger)row {
+    if (row < 0 || row >= self.completeMenu.count) {
         return nil;
     }
-    NSDictionary *item = self.menu[row];
-    NSMutableString *text = [NSMutableString stringWithString:@""];
+    NSDictionary *item = self.completeMenu[row];
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
     if (item[@"serving_date"]) {
         NSDate *servingDate = [self.inputDateFormatter dateFromString:item[@"serving_date"]];
-        [text appendFormat:@"%@", [self.outputDateFormatter stringFromDate:servingDate]];
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:[self.outputDateFormatter stringFromDate:servingDate]]];
     }
     if (item[@"main_course"]) {
-        [text appendFormat:@"\n\nMain Course: %@", item[@"main_course"]];
+        [text appendAttributedString:[self toBold:@"\n\nMain Course: "]];
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:item[@"main_course"]]];
     }
     if (item[@"sides"]) {
-        [text appendFormat:@"\n\nSides: %@", item[@"sides"]];
+        [text appendAttributedString:[self toBold:@"\n\nSides: "]];
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:item[@"sides"]]];
     }
-    [text appendFormat:@"\n\nCake: %@\n", [item[@"cake"] boolValue]? @"Yes": @"No"];
+    [text appendAttributedString:[self toBold:@"\n\nCake: "]];
+    [text appendAttributedString:[[NSAttributedString alloc] initWithString:([item[@"cake"] boolValue]? @"Yes": @"No")]];
     return text;
+}
+
+- (NSAttributedString *)toBold:(NSString *)string {
+    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithString:string];
+    [ret addAttribute:NSForegroundColorAttributeName value:[NSColor darkGrayColor] range:NSMakeRange(0, string.length)];
+    return ret;
 }
 
 @end

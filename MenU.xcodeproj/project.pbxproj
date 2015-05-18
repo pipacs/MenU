@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		964742161B09F09600FD2958 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E8DD01B06302C003F36BF /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		964E4E8B1B09E1A0000D71D2 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 964E4E711B09E081000D71D2 /* NotificationCenter.framework */; };
+		964E4E921B09E1A0000D71D2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 964E4E901B09E1A0000D71D2 /* InfoPlist.strings */; };
+		964E4E951B09E1A0000D71D2 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964E4E941B09E1A0000D71D2 /* TodayViewController.m */; };
+		964E4E971B09E1A0000D71D2 /* TodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 964E4E961B09E1A0000D71D2 /* TodayViewController.xib */; };
+		964E4E9A1B09E1A0000D71D2 /* Lunch.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 964E4E8A1B09E1A0000D71D2 /* Lunch.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		968E8DAD1B05FDAA003F36BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E8DAC1B05FDAA003F36BF /* AppDelegate.m */; };
 		968E8DAF1B05FDAA003F36BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E8DAE1B05FDAA003F36BF /* main.m */; };
 		968E8DB21B05FDAA003F36BF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E8DB11B05FDAA003F36BF /* ViewController.m */; };
@@ -16,7 +22,40 @@
 		968E8DD11B06302C003F36BF /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E8DD01B06302C003F36BF /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		964E4E981B09E1A0000D71D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 968E8D9E1B05FDAA003F36BF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 964E4E891B09E1A0000D71D2;
+			remoteInfo = Lunch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		964E4E851B09E081000D71D2 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				964E4E9A1B09E1A0000D71D2 /* Lunch.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		964742151B09ED0600FD2958 /* MenU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MenU.entitlements; sourceTree = "<group>"; };
+		964E4E711B09E081000D71D2 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		964E4E8A1B09E1A0000D71D2 /* Lunch.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Lunch.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		964E4E8E1B09E1A0000D71D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		964E4E8F1B09E1A0000D71D2 /* Lunch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Lunch.entitlements; sourceTree = "<group>"; };
+		964E4E911B09E1A0000D71D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		964E4E931B09E1A0000D71D2 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		964E4E941B09E1A0000D71D2 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		964E4E961B09E1A0000D71D2 /* TodayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodayViewController.xib; sourceTree = "<group>"; };
 		968E8DA61B05FDAA003F36BF /* MenU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		968E8DAA1B05FDAA003F36BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		968E8DAB1B05FDAA003F36BF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -33,6 +72,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		964E4E871B09E1A0000D71D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				964E4E8B1B09E1A0000D71D2 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		968E8DA31B05FDAA003F36BF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -43,10 +90,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		964E4E701B09E081000D71D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				964E4E711B09E081000D71D2 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		964E4E8C1B09E1A0000D71D2 /* Lunch */ = {
+			isa = PBXGroup;
+			children = (
+				964E4E931B09E1A0000D71D2 /* TodayViewController.h */,
+				964E4E941B09E1A0000D71D2 /* TodayViewController.m */,
+				964E4E961B09E1A0000D71D2 /* TodayViewController.xib */,
+				964E4E8D1B09E1A0000D71D2 /* Supporting Files */,
+			);
+			path = Lunch;
+			sourceTree = "<group>";
+		};
+		964E4E8D1B09E1A0000D71D2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				964E4E8E1B09E1A0000D71D2 /* Info.plist */,
+				964E4E8F1B09E1A0000D71D2 /* Lunch.entitlements */,
+				964E4E901B09E1A0000D71D2 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		968E8D9D1B05FDAA003F36BF = {
 			isa = PBXGroup;
 			children = (
 				968E8DA81B05FDAA003F36BF /* MenU */,
+				964E4E8C1B09E1A0000D71D2 /* Lunch */,
+				964E4E701B09E081000D71D2 /* Frameworks */,
 				968E8DA71B05FDAA003F36BF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				968E8DA61B05FDAA003F36BF /* MenU.app */,
+				964E4E8A1B09E1A0000D71D2 /* Lunch.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,6 +141,7 @@
 		968E8DA81B05FDAA003F36BF /* MenU */ = {
 			isa = PBXGroup;
 			children = (
+				964742151B09ED0600FD2958 /* MenU.entitlements */,
 				968E8DAB1B05FDAA003F36BF /* AppDelegate.h */,
 				968E8DAC1B05FDAA003F36BF /* AppDelegate.m */,
 				968E8DB31B05FDAA003F36BF /* Images.xcassets */,
@@ -89,6 +169,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		964E4E891B09E1A0000D71D2 /* Lunch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 964E4E9B1B09E1A0000D71D2 /* Build configuration list for PBXNativeTarget "Lunch" */;
+			buildPhases = (
+				964E4E861B09E1A0000D71D2 /* Sources */,
+				964E4E871B09E1A0000D71D2 /* Frameworks */,
+				964E4E881B09E1A0000D71D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lunch;
+			productName = Lunch;
+			productReference = 964E4E8A1B09E1A0000D71D2 /* Lunch.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		968E8DA51B05FDAA003F36BF /* MenU */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 968E8DC61B05FDAA003F36BF /* Build configuration list for PBXNativeTarget "MenU" */;
@@ -96,10 +193,12 @@
 				968E8DA21B05FDAA003F36BF /* Sources */,
 				968E8DA31B05FDAA003F36BF /* Frameworks */,
 				968E8DA41B05FDAA003F36BF /* Resources */,
+				964E4E851B09E081000D71D2 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				964E4E991B09E1A0000D71D2 /* PBXTargetDependency */,
 			);
 			name = MenU;
 			productName = MenU;
@@ -115,8 +214,21 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Akos Polster";
 				TargetAttributes = {
+					964E4E891B09E1A0000D71D2 = {
+						CreatedOnToolsVersion = 6.3.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+						};
+					};
 					968E8DA51B05FDAA003F36BF = {
 						CreatedOnToolsVersion = 6.3.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -134,11 +246,21 @@
 			projectRoot = "";
 			targets = (
 				968E8DA51B05FDAA003F36BF /* MenU */,
+				964E4E891B09E1A0000D71D2 /* Lunch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		964E4E881B09E1A0000D71D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				964E4E971B09E1A0000D71D2 /* TodayViewController.xib in Resources */,
+				964E4E921B09E1A0000D71D2 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		968E8DA41B05FDAA003F36BF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -151,6 +273,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		964E4E861B09E1A0000D71D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				964E4E951B09E1A0000D71D2 /* TodayViewController.m in Sources */,
+				964742161B09F09600FD2958 /* ISO8601DateFormatter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		968E8DA21B05FDAA003F36BF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -165,7 +296,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		964E4E991B09E1A0000D71D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 964E4E891B09E1A0000D71D2 /* Lunch */;
+			targetProxy = 964E4E981B09E1A0000D71D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		964E4E901B09E1A0000D71D2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				964E4E911B09E1A0000D71D2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		968E8DB51B05FDAA003F36BF /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -177,6 +324,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		964E4E9C1B09E1A0000D71D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Lunch/Lunch.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Lunch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		964E4E9D1B09E1A0000D71D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Lunch/Lunch.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Lunch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		968E8DC41B05FDAA003F36BF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -260,6 +437,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MenU/MenU.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MenU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -271,6 +449,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MenU/MenU.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MenU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -281,6 +460,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		964E4E9B1B09E1A0000D71D2 /* Build configuration list for PBXNativeTarget "Lunch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				964E4E9C1B09E1A0000D71D2 /* Debug */,
+				964E4E9D1B09E1A0000D71D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		968E8DA11B05FDAA003F36BF /* Build configuration list for PBXProject "MenU" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -297,6 +485,7 @@
 				968E8DC81B05FDAA003F36BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
