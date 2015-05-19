@@ -14,6 +14,8 @@
 static NSString * const kUrl = @"http://unwire-menu.herokuapp.com/menus";
 static NSString * const kAppGroup = @"group.dk.unwire.MenU";
 static NSString * const kStorageKeyMenu = @"menu";
+static const CGFloat kTopMargin = 40;
+static const CGFloat kBottomMargin = 60;
 
 @interface TodayViewController () <NCWidgetProviding>
 @property (weak) IBOutlet NSTextField *todayTextField;
@@ -100,7 +102,11 @@ static NSString * const kStorageKeyMenu = @"menu";
 
 - (void)updateUi {
     NSDictionary *todaysItem = [self findTodaysItem];
+    NSAttributedString *text = [self formatMenuItem:todaysItem];
+    CGRect rect = [text boundingRectWithSize:CGSizeMake(self.todayTextField.bounds.size.width, 10000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
     [self.todayTextField setAttributedStringValue:[self formatMenuItem:todaysItem]];
+    NSLog(@"TodayViewController: %@x%@ -> %@x%@", @(self.preferredContentSize.width), @(self.preferredContentSize.height), @(rect.size.width), @(rect.size.height));
+    self.preferredContentSize = CGSizeMake(self.preferredContentSize.width, rect.size.height + kBottomMargin + kTopMargin);
 }
 
 - (NSDictionary *)findTodaysItem {
