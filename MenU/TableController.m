@@ -7,20 +7,13 @@
 //
 
 #import "TableController.h"
-#import "ISO8601DateFormatter.h"
+#import "Menu.h"
 
-static const NSTimeInterval kUpdateInterval = 60. * 60. * 8.;
-static NSString * const kUrl = @"http://unwire-menu.herokuapp.com/menus";
-static NSString * const kAppGroup = @"group.dk.unwire.MenU";
-static NSString * const kStorageKeyMenu = @"menu";
 static const CGFloat kRowHeight = 240;
 
 @interface TableController()
-@property (nonatomic, strong) NSTimer *updateTimer;
-@property (nonatomic, strong) NSArray *completeMenu;
-@property (nonatomic, strong) ISO8601DateFormatter *inputDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *outputDateFormatter;
-@property (nonatomic, strong) NSUserDefaults *sharedDefaults;
+@property (nonatomic, strong) Menu *menu;
 @end
 
 @implementation TableController
@@ -28,79 +21,25 @@ static const CGFloat kRowHeight = 240;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.updateTimer = [NSTimer timerWithTimeInterval:kUpdateInterval target:self selector:@selector(update) userInfo:nil repeats:YES];
-        self.inputDateFormatter = [[ISO8601DateFormatter alloc] init];
-        self.inputDateFormatter.parsesStrictly = NO;
         self.outputDateFormatter = [[NSDateFormatter alloc] init];
         [self.outputDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.outputDateFormatter setTimeStyle:NSDateFormatterNoStyle];
-        self.sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAppGroup];
-        if (!self.sharedDefaults) {
-            NSLog(@"TableController:init: Could not create shared defaults");
-        }
-        [self update];
+        self.menu = [Menu instance];
+        [self.menu addObserver:self forKeyPath:@"allMenus" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     }
     return self;
 }
 
-- (void)dealloc {
-    [self.updateTimer invalidate];
-}
-
-- (void)update {
-    NSLog(@"TableController:update");
-    NSURL *url = [NSURL URLWithString:kUrl];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        NSURLResponse *response = nil;
-        NSError *error = nil;
-        NSData *receivedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        if (error || !receivedData) {
-            NSLog(@"TableController:update: %@", error? error: @"Request failed");
-            return;
-        }
-        NSError *jsonError = nil;
-        NSArray *newMenu = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&jsonError];
-        if (jsonError || !newMenu) {
-            NSLog(@"TableController:update: %@", jsonError? jsonError: @"Invalid response");
-            return;
-        }
-        NSLog(@"TableController:update: Got menu: %@", newMenu);
-        self.completeMenu = newMenu;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self reloadTable];
-        });
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
     });
-}
-
-- (void)reloadTable {
-    [self.tableView reloadData];
-}
-
-#pragma mark - Menu Property
-
-- (void)setCompleteMenu:(NSArray *)menu {
-    NSLog(@"TableController:setCompleteMenu");
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:menu];
-    [self.sharedDefaults setObject:data forKey:kStorageKeyMenu];
-    [self.sharedDefaults synchronize];
-}
-
-- (NSArray *)completeMenu {
-    NSData *data = [self.sharedDefaults objectForKey:kStorageKeyMenu];
-    if (data) {
-        return (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
-    } else {
-        NSLog(@"TableController:completeMenu: No menu");
-        return nil;
-    }
 }
 
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.completeMenu.count;
+    return self.menu.allMenus.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -121,13 +60,13 @@ static const CGFloat kRowHeight = 240;
 }
 
 - (NSAttributedString *)formatMenuItem:(NSInteger)row {
-    if (row < 0 || row >= self.completeMenu.count) {
+    if (row < 0 || row >= self.menu.allMenus.count) {
         return nil;
     }
-    NSDictionary *item = self.completeMenu[row];
+    NSDictionary *item = self.menu.allMenus[row];
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
     if (item[@"serving_date"]) {
-        NSDate *servingDate = [self.inputDateFormatter dateFromString:item[@"serving_date"]];
+        NSDate *servingDate = [NSDate dateWithTimeIntervalSince1970:[item[@"serving_date"] floatValue]];
         [text appendAttributedString:[[NSAttributedString alloc] initWithString:[self.outputDateFormatter stringFromDate:servingDate]]];
     }
     if (item[@"main_course"]) {
