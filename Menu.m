@@ -9,7 +9,7 @@
 #import "Menu.h"
 
 static const NSTimeInterval kUpdateInterval = 60. * 60. * 8.;
-static NSString * const kUrl = @"http://unwire-menu.herokuapp.com/menus";
+static NSString * const kUrl = @"https://todays-menu.herokuapp.com/api/v1/menus";
 static NSString * const kAppGroup = @"group.dk.unwire.MenU";
 static NSString * const kStorageKeyMenu = @"menu";
 
@@ -44,7 +44,6 @@ static NSString * const kStorageKeyMenu = @"menu";
     } else {
         [self.sharedDefaults removeObjectForKey:kStorageKeyMenu];
     }
-    [self.sharedDefaults synchronize];
 }
 
 - (NSDictionary *)todaysMenu {
@@ -90,14 +89,14 @@ static NSString * const kStorageKeyMenu = @"menu";
         NSURLResponse *response = nil;
         NSError *error = nil;
         NSData *receivedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        if (error || !receivedData) {
-            NSLog(@"Menu:update: %@", error? error: @"Request failed");
+        if (error) {
+            NSLog(@"Menu:update: Request failed: %@", error);
             return;
         }
         NSError *jsonError = nil;
         NSArray *newMenu = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&jsonError];
         if (jsonError || !newMenu) {
-            NSLog(@"Menu:update: %@", jsonError? jsonError: @"Invalid response");
+            NSLog(@"Menu:update: JSON error: %@, Data: '%@'", jsonError? jsonError: @"Invalid response", [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
             return;
         }
         self.allMenus = newMenu;

@@ -36,8 +36,15 @@ static const CGFloat kBottomMargin = 60;
 }
 
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult result))completionHandler {
+    NSLog(@"TodayViewController:widgetPerformUpdateWithCompletionHandler");
     [self updateUi];
     completionHandler(NCUpdateResultNewData);
+}
+
+- (void)viewDidAppear {
+    NSLog(@"TodayViewController:viewDidAppear");
+    [super viewDidAppear];
+    [self updateUi];
 }
 
 #pragma mark - Utilities
@@ -66,10 +73,10 @@ static const CGFloat kBottomMargin = 60;
         [text appendAttributedString:[[NSAttributedString alloc] initWithString:item[@"main_course"]]];
     }
     if (item[@"sides"]) {
-        [text appendAttributedString:[self toBold:@"\nSides: "]];
+        [text appendAttributedString:[self toBold:@"\n\nSides: "]];
         [text appendAttributedString:[self toBold:item[@"sides"]]];
     }
-    [text appendAttributedString:[self toBold:@"\nCake: "]];
+    [text appendAttributedString:[self toBold:@"\n\nCake: "]];
     [text appendAttributedString:[[NSAttributedString alloc] initWithString:([item[@"cake"] boolValue]? @"Yes": @"No")]];
     return text;
 }
