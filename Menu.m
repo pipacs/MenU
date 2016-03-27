@@ -1,7 +1,4 @@
 //
-//  Menu.m
-//  MenU
-//
 //  Created by Akos Polster on 26/05/15.
 //  Copyright (c) 2015 Akos Polster. All rights reserved.
 //
@@ -9,7 +6,7 @@
 #import "Menu.h"
 
 static const NSTimeInterval kUpdateInterval = 60. * 60. * 8.;
-static NSString * const kUrl = @"https://todays-menu.herokuapp.com/api/v1/menus";
+static NSString * const kUrl = @"https://todays-menu.herokuapp.com/api/v1/menus&limit=7";
 static NSString * const kAppGroup = @"group.dk.unwire.MenU";
 static NSString * const kStorageKeyMenu = @"menu";
 
@@ -61,8 +58,6 @@ static NSString * const kStorageKeyMenu = @"menu";
     return nil;
 }
 
-#pragma mark - Life Cycle
-
 - (instancetype)init {
     self = [super init];
     if (!self) {
@@ -99,6 +94,7 @@ static NSString * const kStorageKeyMenu = @"menu";
             NSLog(@"Menu:update: JSON error: %@, Data: '%@'", jsonError? jsonError: @"Invalid response", [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
             return;
         }
+        NSLog(@"%@", newMenu);
         self.allMenus = newMenu;
     });
 }

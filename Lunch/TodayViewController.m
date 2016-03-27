@@ -1,14 +1,12 @@
 //
-//  TodayViewController.m
-//  Lunch
-//
 //  Created by Akos Polster on 18/05/15.
 //  Copyright (c) 2015 Akos Polster. All rights reserved.
 //
 
 #import "TodayViewController.h"
-#import <NotificationCenter/NotificationCenter.h>
+
 #import "Menu.h"
+#import <NotificationCenter/NotificationCenter.h>
 
 static const CGFloat kTopMargin = 40;
 static const CGFloat kBottomMargin = 60;
@@ -36,13 +34,11 @@ static const CGFloat kBottomMargin = 60;
 }
 
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult result))completionHandler {
-    NSLog(@"TodayViewController:widgetPerformUpdateWithCompletionHandler");
     [self updateUi];
     completionHandler(NCUpdateResultNewData);
 }
 
 - (void)viewDidAppear {
-    NSLog(@"TodayViewController:viewDidAppear");
     [super viewDidAppear];
     [self updateUi];
 }

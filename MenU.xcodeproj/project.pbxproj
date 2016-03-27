@@ -98,7 +98,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		964E4E8C1B09E1A0000D71D2 /* Lunch */ = {
+		964E4E8C1B09E1A0000D71D2 /* Lunch Extension */ = {
 			isa = PBXGroup;
 			children = (
 				964E4E931B09E1A0000D71D2 /* TodayViewController.h */,
@@ -106,6 +106,7 @@
 				964E4E961B09E1A0000D71D2 /* TodayViewController.xib */,
 				964E4E8D1B09E1A0000D71D2 /* Supporting Files */,
 			);
+			name = "Lunch Extension";
 			path = Lunch;
 			sourceTree = "<group>";
 		};
@@ -123,8 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				96EF58DA1B146A4B00C8C34A /* Models */,
-				968E8DA81B05FDAA003F36BF /* MenU */,
-				964E4E8C1B09E1A0000D71D2 /* Lunch */,
+				968E8DA81B05FDAA003F36BF /* MenU App */,
+				964E4E8C1B09E1A0000D71D2 /* Lunch Extension */,
 				964E4E701B09E081000D71D2 /* Frameworks */,
 				968E8DA71B05FDAA003F36BF /* Products */,
 			);
@@ -139,7 +140,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		968E8DA81B05FDAA003F36BF /* MenU */ = {
+		968E8DA81B05FDAA003F36BF /* MenU App */ = {
 			isa = PBXGroup;
 			children = (
 				968E8DAB1B05FDAA003F36BF /* AppDelegate.h */,
@@ -150,6 +151,7 @@
 				968E8DB01B05FDAA003F36BF /* ViewController.h */,
 				968E8DB11B05FDAA003F36BF /* ViewController.m */,
 			);
+			name = "MenU App";
 			path = MenU;
 			sourceTree = "<group>";
 		};

@@ -1,7 +1,4 @@
 //
-//  TableController.m
-//  MenU
-//
 //  Created by Akos Polster on 15/05/15.
 //  Copyright (c) 2015 Akos Polster. All rights reserved.
 //
@@ -12,7 +9,8 @@
 static const CGFloat kRowHeight = 240;
 
 @interface TableController()
-@property (nonatomic, strong) NSDateFormatter *outputDateFormatter;
+@property (nonatomic, strong) NSDateFormatter *modelDateFormatter;
+@property (nonatomic, strong) NSDateFormatter *displayDateFormatter;
 @property (nonatomic, strong) Menu *menu;
 @end
 
@@ -21,9 +19,11 @@ static const CGFloat kRowHeight = 240;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.outputDateFormatter = [[NSDateFormatter alloc] init];
-        [self.outputDateFormatter setDateStyle:NSDateFormatterLongStyle];
-        [self.outputDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        self.modelDateFormatter = [[NSDateFormatter alloc] init];
+        self.modelDateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        self.displayDateFormatter = [[NSDateFormatter alloc] init];
+        self.displayDateFormatter.dateStyle = NSDateFormatterLongStyle;
+        self.displayDateFormatter.timeStyle = NSDateFormatterNoStyle;
         self.menu = [Menu instance];
         [self.menu addObserver:self forKeyPath:@"allMenus" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     }
@@ -35,8 +35,6 @@ static const CGFloat kRowHeight = 240;
         [self.tableView reloadData];
     });
 }
-
-#pragma mark - Table View Data Source
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     return self.menu.allMenus.count;
@@ -64,10 +62,11 @@ static const CGFloat kRowHeight = 240;
         return nil;
     }
     NSDictionary *item = self.menu.allMenus[row];
+    NSLog(@"TableController:formatMenuItem: Formatting %@", item);
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
     if (item[@"serving_date"]) {
-        NSDate *servingDate = [NSDate dateWithTimeIntervalSince1970:[item[@"serving_date"] floatValue]];
-        [text appendAttributedString:[[NSAttributedString alloc] initWithString:[self.outputDateFormatter stringFromDate:servingDate]]];
+        NSDate *servingDate = [self.modelDateFormatter dateFromString:item[@"serving_date"]];
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:[self.displayDateFormatter stringFromDate:servingDate]]];
     }
     if (item[@"main_course"]) {
         [text appendAttributedString:[self toBold:@"\n\nMain Course: "]];
