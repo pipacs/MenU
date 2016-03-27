@@ -6,7 +6,7 @@
 #import "Menu.h"
 
 static const NSTimeInterval kUpdateInterval = 60. * 60. * 8.;
-static NSString * const kUrl = @"https://todays-menu.herokuapp.com/api/v1/menus&limit=7";
+static NSString * const kUrl = @"https://todays-menu.herokuapp.com/api/v1/menus?limit=7";
 static NSString * const kAppGroup = @"group.dk.unwire.MenU";
 static NSString * const kStorageKeyMenu = @"menu";
 
