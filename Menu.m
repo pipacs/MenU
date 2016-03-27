@@ -7,13 +7,14 @@
 
 static const NSTimeInterval kUpdateInterval = 60. * 60. * 8.;
 static NSString * const kUrl = @"https://todays-menu.herokuapp.com/api/v1/menus?limit=7";
-static NSString * const kAppGroup = @"group.dk.unwire.MenU";
+static NSString * const kAppGroup = @"group.com.pipacs.MenU";
 static NSString * const kStorageKeyMenu = @"menu";
 
 @interface Menu()
 @property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, strong) NSArray *completeMenu;
 @property (nonatomic, strong) NSUserDefaults *sharedDefaults;
+@property (nonatomic, strong) NSDateFormatter *modelDateFormatter;
 @end
 
 @implementation Menu
@@ -27,6 +28,24 @@ static NSString * const kStorageKeyMenu = @"menu";
         instance_ = [[Menu alloc] init];
     });
     return instance_;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:kUpdateInterval target:self selector:@selector(update) userInfo:nil repeats:YES];
+    [self.updateTimer fire];
+    self.sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAppGroup];
+    self.modelDateFormatter = [[NSDateFormatter alloc] init];
+    self.modelDateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    [self update];
+    return self;
+}
+
+- (void)dealloc {
+    [self.updateTimer invalidate];
 }
 
 - (NSArray *)allMenus {
@@ -49,32 +68,14 @@ static NSString * const kStorageKeyMenu = @"menu";
         if (!item[@"serving_date"]) {
             continue;
         }
-        double servingSeconds = [item[@"serving_date"] doubleValue];
-        NSInteger servingDay = (NSInteger)(servingSeconds / 3600. / 24.);
+        NSDate *servingDate = [self.modelDateFormatter dateFromString:item[@"serving_date"]];
+        NSInteger servingDay = (NSInteger)([servingDate timeIntervalSince1970] / 3600. / 24.);
         if (servingDay == today) {
             return item;
         }
     }
     return nil;
 }
-
-- (instancetype)init {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:kUpdateInterval target:self selector:@selector(update) userInfo:nil repeats:YES];
-    [self.updateTimer fire];
-    self.sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:kAppGroup];
-    [self update];
-    return self;
-}
-
-- (void)dealloc {
-    [self.updateTimer invalidate];
-}
-
-#pragma mark - Internal
 
 - (void)update {
     NSURL *url = [NSURL URLWithString:kUrl];

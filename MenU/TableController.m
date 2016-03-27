@@ -62,7 +62,6 @@ static const CGFloat kRowHeight = 240;
         return nil;
     }
     NSDictionary *item = self.menu.allMenus[row];
-    NSLog(@"TableController:formatMenuItem: Formatting %@", item);
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
     if (item[@"serving_date"]) {
         NSDate *servingDate = [self.modelDateFormatter dateFromString:item[@"serving_date"]];
